@@ -118,7 +118,7 @@ video{
   <!-- Intro button -->
   <div class="open-wrap" id="openWrap">
     <div class="btn-deco">✦ &nbsp; ✦ &nbsp; ✦</div>
-    <button class="open-btn" onclick="openSlides()">ШАҚЫРУДЫ АШУ</button>
+    <button class="open-btn" onclick="openSlides()" ontouchend="event.preventDefault();openSlides()">ШАҚЫРУДЫ АШУ</button>
     <div class="btn-deco">✦ &nbsp; ✦ &nbsp; ✦</div>
   </div>
 
@@ -161,6 +161,13 @@ function toggleSound(){
   if(soundOn){bgm.pause();soundOn=false;sndBtn.textContent='🔇';}
   else{bgm.play();soundOn=true;sndBtn.textContent='🔊';}
 }
+
+// On first tap anywhere — play intro video (iOS unlock)
+document.addEventListener('touchstart', function onFirstTouch(){
+  var v0 = document.getElementById('v0');
+  if(v0.paused) v0.play();
+  document.removeEventListener('touchstart', onFirstTouch);
+}, {once: true});
 
 // Show open button after 1.5s
 setTimeout(function(){
